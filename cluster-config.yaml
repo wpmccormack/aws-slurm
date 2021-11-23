@@ -1,0 +1,31 @@
+Region: us-east-1
+Image:
+  Os: centos7
+HeadNode:
+  InstanceType: t2.xlarge
+  Networking:
+    SubnetId: subnet-0d1b9a3449c84194d
+  Ssh:
+    KeyName: patrick-test
+  CustomActions:
+    OnNodeConfigured:
+      Script: https://patrick-test-1.s3.amazonaws.com/startup-image-test-2.sh
+  Iam:
+    S3Access:
+      - BucketName: patrick-test-1
+        EnableWriteAccess: False
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: hlt-test-1
+      Networking:
+        SubnetIds:
+          - subnet-0e47daf1fa9425f65
+      ComputeResources:
+        - Name: queue1
+          InstanceType: t2.xlarge
+          MinCount: 0
+          MaxCount: 10
+      CustomActions:
+        OnNodeConfigured:
+          Script: https://patrick-test-1.s3.amazonaws.com/startup-image-test-2.sh
