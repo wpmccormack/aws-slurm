@@ -5,15 +5,11 @@ HeadNode:
   InstanceType: t2.xlarge
   Networking:
     SubnetId: subnet-0d1b9a3449c84194d
-    AdditionalSecurityGroups:
-      - sg-021974b65bd7aa793
   Ssh:
     KeyName: patrick-test
   CustomActions:
     OnNodeConfigured:
       Script: https://patrick-test-1.s3.amazonaws.com/startup-image-test-2.sh
-      Args:
-        - "wget"
   Iam:
     S3Access:
       - BucketName: patrick-test-1
@@ -22,19 +18,14 @@ Scheduling:
   Scheduler: slurm
   SlurmQueues:
     - Name: hlt-test-1
-      CapacityType: SPOT
       Networking:
         SubnetIds:
           - subnet-0e47daf1fa9425f65
-        SecurityGroups:
-          - sg-021974b65bd7aa793
       ComputeResources:
         - Name: queue1
-          InstanceType: g4dn.16xlarge
+          InstanceType: t2.xlarge
           MinCount: 0
           MaxCount: 10
       CustomActions:
         OnNodeConfigured:
           Script: https://patrick-test-1.s3.amazonaws.com/startup-image-test-2.sh
-          Args:
-            - "wget"
